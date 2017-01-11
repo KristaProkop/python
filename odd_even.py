@@ -8,8 +8,12 @@
 # ...
 # Number is 2000.  This is an even number.
 
-for count in range(1, 2001):
-  if count % 2 == 0:
-    print "Number is", str(count)+'.', "This is an even number."
-  else:
-     print "Number is", str(count)+'.', "This is an odd number."
+def oddEven(a, b):
+  for count in range(a, b+1):
+    if count % 2 == 0:
+      print "Number is", str(count)+ ". This is an even number."
+    else:
+       print "Number is", str(count)+ ". This is an odd number."
+     
+
+oddEven(1, 2000)
