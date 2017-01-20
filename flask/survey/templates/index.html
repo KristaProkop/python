@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dojo Survey Index</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+</head>
+<body>
+    <div>
+        <form action="/result" method="post"> 
+            <label>Your Name: <input type="name" name="name"></label>
+            <label>Dojo Location: 
+                <select name="location">
+                    <option value="San Jose">San Jose</option>
+                    <option value="Chicago">Chicago</option>
+                    <option value="San Francisco">San Francisco</option>
+                    <option value="New York">New York</option>
+                </select>
+            </label>
+            <label>Favorite Language: 
+                <select name="language">
+                    <option value="Python">Python</option>
+                    <option value="Javascript">Javascript</option>
+                    <option value="Ruby">Ruby</option>
+                </select>
+            </label>
+            <label>Comment (optional): <input type="textarea" name="comment" id="comment_box"></label>
+            <!-- need to fix comment field to show multiple lines -->
+            <button>Submit</button>
+        </form>
+    </div>
+</body>
+</html>
