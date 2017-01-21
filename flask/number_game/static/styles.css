@@ -1,0 +1,44 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: Helvetica;
+}
+
+div {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+form {
+    width: 150px;
+    display: inline-block;
+    margin-left: 50%;
+    transform: translate(-50%);
+    margin-top: 30px;
+}
+
+h1  {
+    display: block;
+    border: 1px solid black;
+    height: 150px;
+    width: 275px;
+    margin: 0 auto;
+    padding-top: 75px;
+    margin-top: 30px;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
