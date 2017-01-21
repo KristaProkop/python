@@ -9,13 +9,14 @@
     <div>
         <h2>Welcome to the Great Number Game!</h2>
         <p>I am thinking of a number between 1 and 100. </p>
-        <p>Take a guess!</p>
+        <p>You have 3 guesses!</p>
     </div>
     <div  id="hint">
-        <h1 class="red">Too High!!</h1>
+        <h1 class={{session['color']}}>{{session['result']}}</h1>
+        <button class={{session['playagain']}}>Play again</button>
     </div> 
-    <form name="guess" method="post">
-        <input type="text" name="number">
+    <form name="guess" method="post" class={{session['formsubmit']}}>
+        <input type="text" name="guess">
         <input type="submit" name="submit">
     </form>
 
