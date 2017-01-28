@@ -1,0 +1,36 @@
+What query would you run to get the total revenue for March of 2012?
+SELECT SUM(billing.amount) AS 2012_revenue
+FROM clients 
+LEFT JOIN billing ON clients.client_id = billing.client_id
+WHERE charged_datetime LIKE '%2012%'
+
+
+What query would you run to get total revenue collected from the client with an id of 2?
+SELECT clients.client_id, clients.first_name, clients.last_name,  SUM(billing.amount) AS revenue
+FROM clients 
+LEFT JOIN billing ON clients.client_id = billing.client_id
+WHERE clients.client_id = 2
+
+
+What query would you run to get all the sites that client=10 owns?
+
+
+What query would you run to get total # of sites created each month for the client with an id of 1? What about for client=20?
+
+
+What query would you run to get the total # of leads we've generated for each of our sites between January 1, 2011 to February 15, 2011?
+
+
+What query would you run to get a list of client names and the total # of leads we've generated for each of our clients between January 1, 2011 to December 31, 2011?
+
+
+What query would you run to get a list of client name and the total # of leads we've generated for each client each month between month 1 - 6 of Year 2011?
+
+
+What query would you run to get a list of client name and the total # of leads we've generated for each of our client's sites between January 1, 2011 to December 31, 2011? Come up with a second query that shows all the clients, the site name(s), and the total number of leads generated from each site for all time.
+
+
+Write a single query that retrieves total revenue collected from each client each month of the year.
+
+
+Write a single query that retrieves all the sites that each client owns. Group the results so that each row shows a new client. Add a new field called 'sites' that has all the sites that the client owns. (HINT: use GROUP_CONCAT)

@@ -1,0 +1,22 @@
+USE sakila
+-- 
+<!-- show only comedies from 1991 onward -->
+SELECT title, rating, release_year, category.name
+FROM film
+LEFT JOIN film_category ON film_category.film_id = film.film_id
+LEFT JOIN category ON category.category_id = film_category.category_id
+WHERE release_year > 1990 AND category.name = 'Comedy'
+ORDER BY release_year DESC
+
+<!-- 
+- show all rentals for Zorro Ark by inventoryID   -->
+-- 
+SELECT customer.first_name, customer.last_name, film.title, rental.rental_date, inventory.inventory_id
+from customer
+LEFT JOIN rental ON customer.customer_id = rental.customer_id
+LEFT JOIN inventory ON rental.inventory_id = inventory.inventory_id
+LEFT JOIN film ON inventory.film_id = film.film_id
+WHERE film.title = 'Zorro Ark'
+ORDER BY inventory.inventory_id 
+
+
