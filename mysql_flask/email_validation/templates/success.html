@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Success</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+</head>
+<body>
+
+    <h3>The email address you entered ({{email_submitted}}) is a valid address! Thank you!</h3>
+    <h4>Email addresses entered:</h4>
+    {% for email in email_dict: %}
+         <p>Email: {{ email['email'] }}</p>
+         <p>Created at: {{ email['created_at'] }}</p>
+         <p>Updated at: {{ email['updated_at'] }}</p>
+
+         <hr>
+    {% endfor %}
+
+</body>
+</html>
