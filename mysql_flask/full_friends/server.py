@@ -35,7 +35,7 @@ def edit(friend_id):
 
 @app.route('/friends/<friend_id>', methods=['POST'])
 def update(friend_id):
-    query = "UPDATE friends SET first_name = :first_name, last_name = :last_name, email = :email WHERE id = :id"
+    query = "UPDATE friends SET first_name = :first_name, last_name = :last_name, email = :email, updated_at = NOW() WHERE id = :id"
     data =  {'id': friend_id, 'first_name': request.form['first_name'], 'last_name':  request.form['last_name'], 'email': request.form['email']
     }
     friends = mysql.query_db(query, data)
