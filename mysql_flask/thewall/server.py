@@ -14,11 +14,12 @@ app.secret_key = "secret_key"
 
 @app.route('/')
 def index():
+    if 'logged_in' in session:
+        flash('You are already logged in')
     return render_template('index.html')
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    session.pop('logged_in', None)
     session.clear()
     flash("You have logged out")
     return redirect('/')
@@ -40,7 +41,7 @@ def login():
                 session['first_name'] = user[0]['first_name']
                 session['last_name'] = user[0]['last_name']
                 session['logged_in'] = True
-                return redirect('/load_wall')
+                return redirect('/wall')
             else:
                 flash('check your credentials and try again')
                 return redirect('/')
@@ -52,50 +53,46 @@ def login():
 def register():
     return render_template('registration.html')
 
+@app.route('/register')
+def display_registration():
+    return render_template('registration.html')
 
 @app.route('/register', methods=['POST'])
 ##Need to refactor to DRY structure
 def validate():
-    session['email'] = request.form['email']
-    session['first_name'] = request.form['first_name']
-    session['last_name'] = request.form['last_name']
-    session['password'] = request.form['password']
-    session['password_conf'] = request.form['password_conf']
-    if len(session['email']) < 1:
+    if len(request.form['email']) < 1:
         flash("All fields required.")
         return redirect('/register')
-    if not EMAIL_REGEX.match(session['email']):
+    elif not EMAIL_REGEX.match(request.form['email']):
         flash("Invalid Email Address!")
         return redirect('/register')
-    if (len(session['first_name']) < 2) or (len(session['last_name']) < 2) or not session['first_name'].isalpha() or not session['last_name'].isalpha():
+    elif (len(request.form['first_name']) < 2) or (len(request.form['last_name']) < 2) or not request.form['first_name'].isalpha() or not request.form['last_name'].isalpha():
         flash("Name must be at least 2 characters and cannot contain numbers")
         return redirect('/register')
-    if (len(session['password']) < 8):
+    elif (len(request.form['password']) < 8):
         flash("Password must be 8 or more characters")
         return redirect('/register')
-    if (session['password'] != session['password_conf']):
+    elif (request.form['password'] != request.form['password_conf']):
         flash("Passwords do not match")
         return redirect('/register')
     else:
         pw_hash = bcrypt.generate_password_hash(request.form['password'])
         query = "INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES (:first_name, :last_name, :email, :password, NOW(), NOW())"
         data = {
-             'first_name': session['first_name'],
-             'last_name': session['last_name'],
-             'email': session['email'],
+             'first_name': request.form['first_name'],
+             'last_name': request.form['last_name'],
+             'email': request.form['email'],
              'password': pw_hash
         }
         mysql.query_db(query, data)
         return redirect('/')
-    
+
 @app.route('/wall')
-def wall(): 
-    query = "SELECT first_name FROM users WHERE email = :email"
-    data = {
-             'email': session['email'],
-        }
-    user = mysql.query_db(query, data)
-    return render_template('wall.html')
+##TODO: if no messages in DB do not show messages
+def load_wall():
+    query = "SELECT users.id, users.first_name, users.last_name, messages.message, messages.created_at FROM users JOIN messages ON messages.user_id = users.id ORDER BY messages.created_at"
+    messages = mysql.query_db(query)
+    return render_template('wall.html', messages=messages) 
 
 @app.route('/post_message', methods=['POST'])
 def post_message():
@@ -105,15 +102,7 @@ def post_message():
              'message': request.form['message'],
         }
     mysql.query_db(query, data)
-    return redirect('/load_wall')
-
-@app.route('/load_wall')
-def display_messages():
-    query = "SELECT users.id, users.first_name, users.last_name, messages.message, messages.created_at FROM users LEFT JOIN messages ON messages.user_id = users.id ORDER BY messages.created_at"
-    messages = mysql.query_db(query)
-    return render_template('wall.html', messages=messages)
-
-
+    return redirect('/wall')
 
 app.run(debug=True)
 

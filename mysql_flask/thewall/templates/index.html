@@ -5,7 +5,9 @@
     <title>Log In</title>
 </head>
 <body>
-  <h1>Log in or Register</h1>
+  <header>
+    <h1>Log in or Register</h1>
+  </header>
   <div>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -16,7 +18,7 @@
     {% endwith %}
     <form action="/login" method="POST">
       <label for="email">Email Address:<input type="text" name="email"></label>
-      <label for="password">Password:<input type="text" name="password"></label>
+      <label for="password">Password:<input type="password" name="password"></label>
       <input class="submit" type="submit" value="Log in" id="submit">
     </form>
     <form action="/registration", method="GET">

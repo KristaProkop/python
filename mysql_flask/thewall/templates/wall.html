@@ -17,15 +17,15 @@
         <textarea id="post_message" type="textarea" name="message"></textarea>
         <input class="submit" type="submit" value="Post">
     </form>
-{% for message in messages %}
+
+    {% for message in messages %}
     <div>
-    
         <h3>{{ message['first_name'] }} {{ message['last_name']  }}</h3>
         <h3>{{ message['created_at'] }}</h3>
         <p>{{ message['message'] }}</p>
 
      </div>
-         {% endfor %}
+    {% endfor %}
     
 </body>
 </html>
