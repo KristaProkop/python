@@ -89,10 +89,9 @@ def validate():
 
 @app.route('/wall')
 def load_wall():
-    print type(session['id'])
     message_query = "SELECT users.id, users.first_name, users.last_name, messages.message, messages.created_at, messages.id AS message_id FROM users JOIN messages ON messages.user_id = users.id ORDER BY messages.created_at"
     messages = mysql.query_db(message_query)
-    comment_query = "SELECT comments.comment, messages.id AS message_id, users.first_name, users.last_name, comments.created_at , comments.id AS comment_id FROM users JOIN messages ON users.id = messages.user_id JOIN comments ON messages.id = comments.message_id"
+    comment_query = "SELECT users.id, users.first_name, users.last_name, comments.comment, comments.created_at, comments.id AS comment_id, messages.id AS message_id FROM users JOIN comments ON comments.user_id = users.id JOIN messages ON comments.message_id  = messages.id"
     comments = mysql.query_db(comment_query)
     return render_template('wall.html', messages=messages, comments=comments) 
 
