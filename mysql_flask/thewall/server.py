@@ -15,8 +15,9 @@ app.secret_key = "secret_key"
 @app.route('/')
 def index():
     if 'logged_in' in session:
-        flash('You are already logged in')
-    return render_template('index.html')
+        return redirect('/wall')
+    else:
+        return render_template('index.html')
 
 @app.route('/logout', methods=['GET'])
 def logout():
