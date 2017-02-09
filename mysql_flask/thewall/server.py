@@ -88,11 +88,13 @@ def validate():
         return redirect('/')
 
 @app.route('/wall')
-##TODO: if no messages in DB do not show messages
 def load_wall():
-    query = "SELECT users.id, users.first_name, users.last_name, messages.message, messages.created_at FROM users JOIN messages ON messages.user_id = users.id ORDER BY messages.created_at"
-    messages = mysql.query_db(query)
-    return render_template('wall.html', messages=messages) 
+    print type(session['id'])
+    message_query = "SELECT users.id, users.first_name, users.last_name, messages.message, messages.created_at, messages.id AS message_id FROM users JOIN messages ON messages.user_id = users.id ORDER BY messages.created_at"
+    messages = mysql.query_db(message_query)
+    comment_query = "SELECT comments.comment, messages.id AS message_id, users.first_name, users.last_name, comments.created_at , comments.id AS comment_id FROM users JOIN messages ON users.id = messages.user_id JOIN comments ON messages.id = comments.message_id"
+    comments = mysql.query_db(comment_query)
+    return render_template('wall.html', messages=messages, comments=comments) 
 
 @app.route('/post_message', methods=['POST'])
 def post_message():
@@ -100,6 +102,17 @@ def post_message():
     data = {
              'user_id': session['id'],
              'message': request.form['message'],
+        }
+    mysql.query_db(query, data)
+    return redirect('/wall')
+
+@app.route('/post_comment/<message_id>', methods=['POST'])
+def post_comment(message_id):
+    query = "INSERT INTO comments (user_id, message_id, comment, created_at, updated_at) VALUES (:user_id, :message_id, :comment, NOW(), NOW())"
+    data = {
+             'user_id': session['id'],
+             'message_id': message_id,
+             'comment': request.form['comment']
         }
     mysql.query_db(query, data)
     return redirect('/wall')
