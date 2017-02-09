@@ -18,6 +18,7 @@ textarea {
     margin-left: 20px;
     width: 90%;
     height: 100px;
+    border-color: #007fff;
 }
 
 .submit {
@@ -57,10 +58,15 @@ div {
     font-family: Helvetica;
 }
 
+section>h3 {
+    display: inline-block;
+    font-style: normal;
+}
+
 h3 {
     display: inline-block;
-    font-weight: lighter;
     font-style: italic;
+    font-weight: lighter;
 }
 
 p {
@@ -68,6 +74,11 @@ p {
     margin-bottom: 30px;
     word-wrap: break-word;
     max-width: 80%;
+}
+
+h4 {
+    margin-left: 20px;
+    color: #007fff
 }
 
 h5 {

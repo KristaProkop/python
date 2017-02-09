@@ -15,7 +15,6 @@
   </script>
 </head>
 <body>
-
     <header>
         <h1>Coding Dojo Wall</h1>
         <h6>Welcome, {{ session['first_name'] }}</h6>
@@ -30,12 +29,14 @@
     </form>
     <div id="accordion">
     {% for message in messages %}
-      <h3>{{ message['first_name'] }} {{ message['last_name']  }}  posted at {{ message['created_at'] }}
-      {% if message['id'] == session['id'] %}
-            <form class="delete_button" action="/delete_message/{{ message['message_id'] }}", method="POST">
-                <input class="delete" type="submit" value="Delete">
-            </form>
-            {% endif %}</h3>
+      <section>
+        <h3>{{ message['first_name'] }} {{ message['last_name']  }}  posted at {{ message['created_at'] }}</h3>
+        {% if message['id'] == session['id'] %}
+          <form class="delete_button" action="/delete_message/{{ message['message_id'] }}", method="POST">
+            <input class="delete" type="submit" value="Delete">
+          </form>
+        {% endif %}
+      </section>
       <div>
         <p class="message">{{ message['message'] }}</p>
         {% for comment in comments %}
@@ -52,12 +53,10 @@
         <form class="comments" action="/post_comment/{{ message['message_id'] }}>" method="POST">
             <h4>Reply</h4>
             <textarea id="post_comment" type="textarea" name="comment"></textarea>
-            <input type="hidden" value={{ message['id'] }}>
             <input class="submit" type="submit" value="Post">
         </form>
       </div>
     {% endfor %}
     </div>
-     
 </body>
 </html>
