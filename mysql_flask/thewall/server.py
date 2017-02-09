@@ -84,7 +84,7 @@ def validate():
              'password': pw_hash
         }
         mysql.query_db(query, data)
-        session['email'] = request.form['email']
+        session['email'] = request.form['email'] #to autofill email address input with registration email
         return redirect('/')
 
 @app.route('/wall')
