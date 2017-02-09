@@ -116,5 +116,23 @@ def post_comment(message_id):
     mysql.query_db(query, data)
     return redirect('/wall')
 
+@app.route('/delete_message/<message_id>', methods=['POST'])
+def delete_message(message_id):
+    query = "UPDATE messages SET messages.message = '<deleted>', updated_at = NOW() WHERE id = :id"
+    data = {
+             'id': message_id,
+        }
+    mysql.query_db(query, data)
+    return redirect('/wall')
+
+@app.route('/delete_comment/<comment_id>', methods=['POST'])
+def delete_comment(comment_id):
+    query = "UPDATE comments SET comments.comment = '<deleted>', updated_at = NOW() WHERE id = :id"
+    data = {
+             'id': comment_id,
+        }
+    mysql.query_db(query, data)
+    return redirect('/wall')
+    
 app.run(debug=True)
 

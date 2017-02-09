@@ -20,14 +20,23 @@
     </form>
     {% for message in messages %}
     <div>
-        <h3>{{ message['first_name'] }} {{ message['last_name']  }}</h3>
+        <h3>{{ message['first_name'] }} {{ message['last_name']  }} {{ message['id'] }}</h3>
         <h3>posted at {{ message['created_at'] }}</h3>
+        {% if message['id'] == session['id'] %}
+            <form class="delete_button" action="/delete_message/{{ message['message_id'] }}", method="POST">
+                <input class="delete" type="submit" value="Delete">
+            </form>
+        {% endif %}
         <p>{{ message['message'] }}</p>
         {% for comment in comments %}
                 {% if message['message_id'] == comment['message_id'] %}
-                
-                <h3 class="replies">{{ comment['first_name'] }}{{ comment['last_name'] }} replied at {{ comment['created_at'] }}</h3>
-                <p class="replies text">{{ comment['comment'] }}</p>
+                    <h3 class="replies">{{ comment['first_name'] }}{{ comment['last_name'] }} replied at {{ comment['created_at'] }}</h3>
+                    {% if comment['id'] == session['id'] %}
+                        <form class="delete_button" action="/delete_comment/{{ comment['comment_id'] }}", method="POST">
+                            <input class="delete" type="submit" value="Delete">
+                        </form>
+                    {% endif %}
+                    <p class="replies text">{{ comment['comment'] }}</p>
                 {% endif %}
         {% endfor %}
         <form class="comments" action="/post_comment/{{ message['message_id'] }}>" method="POST">

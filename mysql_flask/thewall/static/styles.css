@@ -119,3 +119,18 @@ button {
 .text {
     margin-left: 120px;
 }
+
+.delete {
+    display: inline-block;
+    background-color: red;
+    color: white;
+    width: 50px;
+}
+
+.delete_button {
+    display: inline-block;
+}
+
+div {
+    border: 1px solid gray;
+}
