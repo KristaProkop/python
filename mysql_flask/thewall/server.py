@@ -31,28 +31,27 @@ def login():
     if (len(session['email']) < 1) or (len(password) < 1): 
         flash('please enter a valid email address and password')
         return redirect('/')
-    else:
-        try: 
-            user_query = "SELECT * FROM users WHERE email = :email LIMIT 1"
-            query_data = { 'email': session['email'] }
-            user = mysql.query_db(user_query, query_data) 
-            if bcrypt.check_password_hash(user[0]['password'], password):
-                session['id'] = user[0]['id']
-                session['first_name'] = user[0]['first_name']
-                session['last_name'] = user[0]['last_name']
-                session['logged_in'] = True
-                return redirect('/wall')
-            else:
-                flash('check your credentials and try again')
-                return redirect('/')
-        except: 
-            flash("Please check your credentials and try again")
+    try: 
+        user_query = "SELECT * FROM users WHERE email = :email LIMIT 1"
+        query_data = { 'email': session['email'] }
+        user = mysql.query_db(user_query, query_data) 
+        if bcrypt.check_password_hash(user[0]['password'], password):
+            session['id'] = user[0]['id']
+            session['first_name'] = user[0]['first_name']
+            session['last_name'] = user[0]['last_name']
+            session['logged_in'] = True
+            return redirect('/wall')
+        else:
+            flash('Please check your credentials and try again')
             return redirect('/')
+    except: 
+        return redirect('/')
 
 @app.route('/registration', methods=['GET'])
 def register():
     return render_template('registration.html')
 
+#method-less route in case registration form is submitted without data
 @app.route('/register')
 def display_registration():
     return render_template('registration.html')
@@ -85,6 +84,7 @@ def validate():
              'password': pw_hash
         }
         mysql.query_db(query, data)
+        session['email'] = request.form['email']
         return redirect('/')
 
 @app.route('/wall')

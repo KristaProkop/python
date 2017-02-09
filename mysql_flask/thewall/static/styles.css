@@ -23,7 +23,7 @@ textarea {
 .submit {
     display: block;
     width: 80px;
-    background-color: steelblue;
+    background-color: #007fff;
     color: white;
     margin: 10px;
     margin-left: 20px;
@@ -46,7 +46,7 @@ h2 {
     width: 300px;
     font-family: Helvetica;
 /*    font-weight: lighter;*/
-    color: steelblue;
+    color: #007fff;
 }
 
 div {
@@ -91,7 +91,7 @@ h6 {
 
 
 header {
-    background-color: steelblue;
+    background-color: #007fff;
     color: white;
     font-family: Helvetica;
     width: 95%;
@@ -114,6 +114,7 @@ button {
 
 .replies {
     margin-left: 60px;
+    font-size: 1em;
 }
 
 .text {
@@ -131,6 +132,6 @@ button {
     display: inline-block;
 }
 
-div {
-    border: 1px solid gray;
+.message {
+    display: block;
 }

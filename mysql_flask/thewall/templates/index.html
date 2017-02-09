@@ -17,7 +17,7 @@
       {% endif %}
     {% endwith %}
     <form action="/login" method="POST">
-      <label for="email">Email Address:<input type="text" name="email"></label>
+      <label for="email">Email Address:<input type="text" name="email" value="{{ session['email'] }}" ></label>
       <label for="password">Password:<input type="password" name="password"></label>
       <input class="submit" type="submit" value="Log in" id="submit">
     </form>
