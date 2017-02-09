@@ -23,10 +23,11 @@ textarea {
 .submit {
     display: block;
     width: 80px;
-    background-color: #007fff;
+    background-color: #48bd58;
     color: white;
     margin: 10px;
     margin-left: 20px;
+    border-radius: 15px;
 }
 
 h1 {
@@ -102,9 +103,12 @@ header {
 
 button {
     float: right;
-    width:60px;
+    width:70px;
     margin-top: 5px;
     margin-right: 10px;
+    border-radius: 15px;
+    background-color: white;
+    color: #007fff;
 }
 
 .comments {
@@ -123,15 +127,24 @@ button {
 
 .delete {
     display: inline-block;
-    background-color: red;
+    background-color: #ff8682;
     color: white;
     width: 50px;
+    border-radius: 15px;
+    padding: 2px;
 }
 
 .delete_button {
     display: inline-block;
+    font-size: .7em;
+    font-weight: lighter;
+
 }
 
 .message {
     display: block;
+}
+
+#accordion {
+    margin-left: 20px;
 }
