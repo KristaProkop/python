@@ -36,9 +36,9 @@
             <input class="delete" type="submit" value="Delete">
           </form>
         {% endif %}
+        <p class="message">{{ message['message'] }}</p>
       </section>
       <div>
-        <p class="message">{{ message['message'] }}</p>
         {% for comment in comments %}
             {% if message['message_id'] == comment['message_id'] %}
                 <h3 class="replies">{{ comment['first_name'] }} {{ comment['last_name'] }} replied at {{ comment['created_at'] }}</h3>
