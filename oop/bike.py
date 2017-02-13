@@ -22,7 +22,7 @@ class Bike(object):
     if self.miles <= 5:
       self.miles = 0
     else:
-      self.miles = self.miles - 5
+      self.miles += 5
     return self
 
 
