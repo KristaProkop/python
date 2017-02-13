@@ -14,7 +14,7 @@ class Bike(object):
 
   def ride(self):
     print "riding"
-    self.miles = self.miles + 10
+    self.miles += 10
     return self
 
   def reverse(self):
