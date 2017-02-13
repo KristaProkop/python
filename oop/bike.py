@@ -15,6 +15,7 @@ class Bike(object):
   def ride(self):
     print "riding"
     self.miles = self.miles + 10
+    return self
 
   def reverse(self):
     print "Reversing"
@@ -22,25 +23,30 @@ class Bike(object):
       self.miles = 0
     else:
       self.miles = self.miles - 5
+    return self
 
 
 bike1 = Bike(200, "25mph")
 bike2 = Bike(250, "40mph")
 bike3 = Bike(100, "10mph")
 
-for x in range(0, 3):
-  bike1.ride()
-bike1.reverse()
-bike1.displayInfo()
+bike1.ride().ride().ride().reverse()
+bike2.ride().reverse().ride().reverse()
+bike3.reverse().reverse().reverse()
 
-for x in range(0, 2):
-  bike2.ride()
-  bike2.reverse()
-bike2.displayInfo()
+# for x in range(0, 3):
+#   bike1.ride()
+# bike1.reverse()
+# bike1.displayInfo()
 
-for x in range(0, 3):
-  bike3.reverse()
-bike3.displayInfo()
+# for x in range(0, 2):
+#   bike2.ride().reverse()
+#   # bike2.reverse()
+# bike2.displayInfo()
+
+# for x in range(0, 3):
+#   bike3.reverse()
+# bike3.displayInfo()
 
 
 
