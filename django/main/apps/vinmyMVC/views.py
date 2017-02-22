@@ -2,11 +2,21 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 def index(request):
-    return render(request, 'vinmyMVC/index.html')
+    context = {
+        'email': 'blog@gmail.com',
+        'name': 'mike',
+    }
+    return render(request, 'vinmyMVC/index.html', context)
 
 def show(request):
     print (request.method)
     return render(request, 'vinmyMVC/show_users.html')
+
+def see(request, id):
+    context = {
+        'id': id,
+    }
+    return render(request, 'vinmyVMC/see.html')
 
 def create(request):
     print request.method
