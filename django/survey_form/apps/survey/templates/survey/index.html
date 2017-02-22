@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dojo Survey</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'survey/style.css' %}"media="screen" title="no title"  charset="utf-8">
+</head>
+<body>
+ 
+    <form id="submit" action="/process" method="POST" >
+        {% csrf_token %} 
+        <label> Your name: <input type="text" name="name"></label>
+         <label> Dojo Location: <select name="location"></label>
+            <option name="San Francisco" value="San Francisco">San Francisco</option>
+            <option name='San Diego' value="San Diego">San Diego</option>
+            <option name='Chicago' value="Chicago">Chicago</option>
+            <option name='Seattle' value="Seattle">Seattle</option>
+            <option name='Mountain View' value="mv">Mountain View</option>
+        </select>
+        <label>Favorite Language <select name="language"></label>
+            <option name="Javascript" value="Javascript">Javascript</option>
+            <option name='Python' value="Python">Python</option>
+            <option name='Ruby' value="Ruby">Ruby</option>
+            <option name='PHP' value="PHP">PHP</option>
+        </select>
+        <label id="comments">Comment (optional):<textarea id="comment" type="text" name="comment"> </textarea> </label>
+        <input id="submit_button" type="submit" value="submit">
+    </form>
+</body>
+</html>

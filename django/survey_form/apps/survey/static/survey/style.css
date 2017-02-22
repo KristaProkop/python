@@ -1,0 +1,117 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+   width: 70%;
+   margin: 0 auto;
+}
+
+h1  {
+    color: red;
+}
+
+h2 {
+    font-family: Helvetica;
+    font-size: 1.5em;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+    background-color: lightgreen;
+    border: 1px solid black;
+
+}
+
+h3 {
+    margin-left: 10%;
+    font-family: Helvetica;
+    font-size: 1.3em;
+    margin-top: 30px;
+}
+
+div {
+    border: 1px solid black;
+    margin-top: 20px;
+    min-height: 400px;
+}
+
+table {
+    margin-left: 15%;
+    table-layout: fixed;
+    width: 75%;
+    font-family: helvetica;
+    font-size: 1.3em;
+}
+
+td:nth-child(1) {  
+  font-weight: bold;
+
+}
+
+td:nth-child(2) {  
+  margin-left: 30px;
+}
+
+button {
+    background-color: steelblue;
+    color: white;
+    margin-left: auto;
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
+
+}
+
+label {
+    display: block;
+    font-family: Helvetica;
+    margin-top: 20px;
+}
+
+input {
+    margin-left: 100px;
+    width: 200px;
+    float: right;
+    margin-right: 20px;
+
+}
+
+select {
+    margin-left: 100px;
+    width: 200px;
+    float: right;
+    margin-right: 20px;
+}
+
+#submit {
+    padding-left: 20px;
+    padding-top: 20px;
+    border: 1px solid black;
+    height: 300px;
+    margin-top: 20px;
+}
+
+
+#comment {
+    border: 1px solid black;
+    display: block;
+    width: 95%;
+    height: 60px;
+}
+
+#submit_button {
+    width: 75px;
+    background-color: steelblue;
+    color: white;
+    margin-top: 50px;
+}
+
+#text {
+    font-weight: normal;
+    word-wrap:break-word;
+    column-span: all;
+    border: .5px solid black;
+    padding: 10px;
+
+}
