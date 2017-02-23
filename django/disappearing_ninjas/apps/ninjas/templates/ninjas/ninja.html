@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Disappearing Ninjas</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'ninjas/css/style.css' %}"media="screen" title="no title"  charset="utf-8">
+</head>
+<body>
+    <div>
+{% load static %}
+    {% if color == 'all' %}
+        <h1>Ninja Turtles</h1>
+        <img src="{% static "ninjas/images/donatello.jpg" %}" alt="donatello"/>
+        <img src="{% static "ninjas/images/michelangelo.jpg" %}" alt="michelangelo"/>
+        <img src="{% static "ninjas/images/leonardo.jpg" %}" alt="leonardo"/>
+        <img src="{% static "ninjas/images/raphael.jpg" %}" alt="raphael"/>
+    
+    {% elif color == 'red' %}
+        <img src="{% static "ninjas/images/raphael.jpg" %}" alt="raphael"/>
+
+    {% elif color == 'blue' %}
+        <img src="{% static "ninjas/images/leonardo.jpg" %}" alt="leonardo"/>
+
+    {% elif color == 'purple' %}
+        <img src="{% static "ninjas/images/donatello.jpg" %}" alt="donatello"/>
+    {% elif color == 'orange' %}
+        <img src="{% static "ninjas/images/michelangelo.jpg" %}" alt="michelangelo"/>
+    {% else %}
+        <img src="{% static "ninjas/images/notapril.jpg" %}" alt="not april"/>
+    {% endif %}
+
+    </div>
+
+</body>
+</html>

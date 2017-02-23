@@ -1,0 +1,13 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
+h1  {
+    color: red;
+}
+
+img {
+    max-width: 200px;
+}
