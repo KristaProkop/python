@@ -12,11 +12,12 @@ def show(request):
     print (request.method)
     return render(request, 'vinmyMVC/show_users.html')
 
-def see(request, id):
+def see(request, id, color):
     context = {
         'id': id,
+        'color': color,
     }
-    return render(request, 'vinmyVMC/see.html')
+    return render(request, 'vinmyMVC/see.html')
 
 def create(request):
     print request.method
