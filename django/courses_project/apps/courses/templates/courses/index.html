@@ -15,7 +15,7 @@
             <span><label>Description:<textarea rows="5" cols="80" name="description"></textarea></label></span>
             <input type="submit" value="Add">
         </form>
-    </header>
+    </header>   
     <main>
         <h1>Courses</h1>
         <table>
@@ -27,8 +27,12 @@
             </tr>
                 {% for course in courses %}
             <tr>
-                <td>{{course.name}}</td>
-                <td>{{course.description}}</td>
+                <td>{{course.name}} {{course.id}}</td>
+                    {% for description in descriptions %}
+                        {% if course.id == description.course.id %}
+                            <td>{{description.description}}</td> 
+                        {% endif %}
+                    {% endfor %} 
                 <td>{{course.created_at}}</td>
                 <td> 
                     <form action="/confirm/{{course.id}}" method="POST">
