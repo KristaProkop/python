@@ -1,0 +1,38 @@
+<html>
+<head>
+  <title>Email Validation</title>
+  {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'email_validation/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Enter a Valid Email!</h1>
+  {% if messages %}
+    {% for message in messages %}
+        <p class="{{message.tags}}">{{message}}</p>
+    {% endfor %}
+  {% endif %}
+  <form action='/validate' method='POST'>
+  {% csrf_token %}
+    <label>Email:<input type="text" name="email"></label>
+    <input type="submit" value="Submit">
+  </form> 
+  {% if users %}
+    <table>
+      <h2>Email addressses entered:</h2>
+      {% for user in users %}
+      <tr>
+        <td>{{user.email}}</td>
+        <td>{{user.created_at}}</td>
+        <td>
+          <form action="/delete/{{user.id}}" method="POST">
+          {% csrf_token %}
+              <button name="delete" value="Delete">delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+</body>
+</html>

@@ -6,5 +6,27 @@
 <body>
 
     <h1>hello world</h1>
+
+    {% for blog in blogs %}
+
+        <h5>{{blog.title}}</h5>
+        <p>{{blog.blog}}</p>
+        {% for comment in blog.comment_set.all %}
+        {{comment.comment}}
+        {% endfor %}
+        <form action="/comments/{{blog.id}}" method="POST">
+            {% csrf_token %}
+            <textarea name="comment"></textarea>
+            <input type="submit" value="Enter comment on blog">
+        </form>
+    {% endfor %}
+
+    <form action="/blogs" method="POST">
+    {% csrf_token %}
+        <label for="title">New Blog Title</label>
+        <input type="text" name="title">
+        <textarea name="blog"></textarea>
+        <input type="submit" value="Enter blog">
+    </form>
 </body>
 </html>

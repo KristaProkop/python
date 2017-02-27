@@ -3,6 +3,6 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index),
-    # url(r'^blogs$', views.blogs),
-    # url(r'^comments/(?P<id>\d+)$', views.comments) 
+    url(r'^validate$', views.create),
+    url(r'^delete/(?P<id>\d+)$', views.delete),
 ]
