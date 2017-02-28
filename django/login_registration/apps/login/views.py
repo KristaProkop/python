@@ -14,17 +14,18 @@ def create(request):
     password2=str(request.POST['password2'])
     valid, response = User.userManager.validate(first_name, last_name, email, password1, password2)
     if valid:
-        print "valid info"
         context = {
             'event': 'registered',
-            'first_name': first_name,
-            'users': User.objects.all(),
+            'first_name': response
         }
         return render(request, 'login/success.html', context)
-    if not valid: 
+    elif not valid: 
         messages.error(request, response)
-        return redirect('/')
-
+    else:
+        messages.error(request, "Something went wrong. Try again later.")
+    return redirect('/')
+    
+##TODO: change routing so successful login/register redirects to /success 
 def login(request):
     email = str(request.POST['email'])
     password = str(request.POST['password'])
@@ -40,5 +41,3 @@ def login(request):
         messages.error(request, response)
         return redirect('/')
 
-def success(request):
-    print 'success'

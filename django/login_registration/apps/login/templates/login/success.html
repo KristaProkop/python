@@ -10,15 +10,5 @@
 <body>
     <h1>Success! Welcome, {{first_name}}</h1>
     <h2>Successfully {{event}}!</h2>
-
-    {% if users %}
-      {% for user in users %}
-            {{user.first_name}}
-            {{user.last_name}}
-            {{user.email}}
-            {{user.password}}
-            {{user.created_at}}
-        {% endfor %}
-    {% endif %}
 </body>
 </html>
