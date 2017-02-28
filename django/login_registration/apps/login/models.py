@@ -5,6 +5,8 @@ import bcrypt
 
 # Create your models here.
 class UserManager(models.Model):
+
+
     def validate(self, first_name, last_name, email, password1, password2):
         try: 
             User.objects.get(email=email) 
@@ -22,19 +24,28 @@ class UserManager(models.Model):
             elif not EMAIL_REGEX.match(email):
                 response = ("Invalid Email Address!")
             else:
+                hashed = bcrypt.hashpw(password1, bcrypt.gensalt())
+                print "hashed pw is", hashed
                 response = first_name
-                user = User.objects.create(first_name=first_name, last_name=last_name, email=email, password=password1)
+                user = User.objects.create(first_name=first_name, last_name=last_name, email=email, password=hashed)
                 return True, response
         return False, response
 
     def login(self, email, password):
-        try: 
-            user = User.objects.get(email=email, password=password)
+        # try: 
+        user = User.objects.get(email=email)
+        print user
+        print 'users password is', user.password
+        print 'bcrypt result is', (bcrypt.hashpw(password, user.password))
+        if user.password == (bcrypt.hashpw(password, user.password)):
             print user.password, user.email
             response = user.first_name
             return True, response
-        except:
-            response = ("Email and password don't match.")
+        else:
+            response = "Email and password don't match."
+            return False, response
+        # except:
+            response = ("Email not found.")
             return False, response
 
 
