@@ -5,16 +5,17 @@ from ..login.models import User
 # Create your models here.
 class CourseManager(models.Model):
     def merge(self, user_id, course_id):
-        try: 
-            #user = User.objects.get(id=user_id)
-            course = Course.objects.get(id=course_id)
-            return "user placeholder", course
-        except:
-            return 'none', 'none'
+        user = User.objects.get(id=user_id)
+        print user
+        course = Course.objects.get(id=course_id)
+        response = Course.user_creator.add(user)
+        print response
+        return True
+
 
 class Course(models.Model):
     name = models.CharField(max_length=255)
-    user_creator = models.ForeignKey(User, default=None)
+    user_creator = models.ManyToManyField(User, null=True, related_name="courses")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     courseManager = CourseManager()

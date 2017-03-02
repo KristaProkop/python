@@ -1,6 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from .models import Course, Description
 from django.core.urlresolvers import reverse
+from ..login.models import User
+from django.contrib import messages
 
 def index(request):
     context = {
@@ -32,18 +34,25 @@ def delete(request, id):
 def add_user(request):
     context = {
         'courses': Course.objects.all(),
-        #'users': Course.objects.all()
+        'users': User.objects.all().order_by('first_name', 'last_name')
     }
     return render(request, 'courses/course_selector.html', context)
 
 def merge_user(request):
-    user_id = request.POST['user_id']
-    course_id = request.POST['course_id']
-    print "user id is ", user_id
-    print "coures id is", course_id
-    user, course = Course.courseManager.merge( course_id)
-    print user, course
-    return redirect(reverse('courses:add_user'))
+    if request.method == 'POST':
+        course_id = int(request.POST['course'])
+        user_id = int(request.POST['user'])
+        user = User.objects.get(id=user_id)
+        course = Course.objects.get(id=course_id)
+        course.user_creator.add(user)
+        message = "Successfully added ", user.first_name, " to ", course.name
+        print message
+        messages.success(request, message)
+        return redirect(reverse('courses:add_user'))
+    else:
+        return redirect(reverse('courses:add_user'))
+
+    
 
 
 

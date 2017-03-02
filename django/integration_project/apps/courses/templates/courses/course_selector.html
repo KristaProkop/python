@@ -6,26 +6,30 @@
     <link rel="stylesheet" href="{% static 'courses/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
-
-
-    <form action="{%url 'courses:merge_user' %}" method="post">
+{% if messages %}
+    {% for message in messages %}
+        <h3 >{{message}}</h3>
+    {% endfor %}
+{% endif %}
+    <form action="{% url 'courses:merge_user' %}" method="post">
         {% csrf_token %}
-        <select>
-        {% if courses %}
-            {% for user in courses %}
-                <!-- add users in user_creator -->
-            {% endfor %}
-        {% endif %}
+        <select name="user">
+            {% if users %}
+                {% for user in users %}
+                    <option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+                {% endfor %}
+            {% endif %}
         </select>
-        <select>
-        {% if courses %}
-            {% for course in courses %}
-                <option value="{{course.id}}" name="course_id">{{course.name}}</option>
-            {% endfor %}
-        {% endif %}
+        <select name="course">
+            {% if courses %}
+                {% for course in courses %}
+                    <option value="{{course.id}}">{{course.name}}</option>
+                {% endfor %}
+            {% endif %}
         </select>
-        <input type="submit" value="Add User to Course">
+        <input type="submit" value="Add User To Course">
     </form>
     <table>
         <tr>
