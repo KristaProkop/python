@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Users to Course</title>
+  {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'courses/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+    <form action="{%url 'courses:merge_user' %}" method="post">
+        {% csrf_token %}
+        <select>
+        {% if courses %}
+            {% for user in courses %}
+                <!-- add users in user_creator -->
+            {% endfor %}
+        {% endif %}
+        </select>
+        <select>
+        {% if courses %}
+            {% for course in courses %}
+                <option value="{{course.id}}" name="course_id">{{course.name}}</option>
+            {% endfor %}
+        {% endif %}
+        </select>
+        <input type="submit" value="Add User to Course">
+    </form>
+    <table>
+        <tr>
+            <th>Course</th>
+            <th>Title</th>
+            <th>Number of Users</th>
+        </tr>
+        {% if courses %}
+            {% for course in courses %}
+        <tr>
+            <td>{{course.id}}</td>
+            <td>{{course.name}}</td>
+            <td>{{course.num_users}}</td>
+            {% endfor %}
+        {% endif %}
+        </tr>
+    </table>
+    <form action="{%url 'courses:index' %}" method="POST">
+    {% csrf_token %}
+        <button>Return Home</button>
+    </form>
+
+</body>
+</html>

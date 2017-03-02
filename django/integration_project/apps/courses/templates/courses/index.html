@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Courses</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'courses/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <a href="{%url 'courses:add_user' %}">Add user to course</a>
+
+        <h1>Add a New Course</h1>
+        <form action="{%url 'courses:create' %}" method="post">
+        {% csrf_token %}
+            <span><label>Name <input type="text" name="name"> </label></span>
+            <span><label>Description <textarea name="description" rows="5" cols="50"></textarea> </label></span>
+            <input type="submit" name="submit">
+        </form>
+    </header>   
+    <main>
+        <h1>Courses</h1>
+        <table>
+            <tr>
+                <th>Course</th>
+                <th>Description</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+            {% if courses %}
+                {% for course in courses %}
+            
+            <tr>
+                <td>{{course.name}} {{course.id}}</td>
+                    {% for description in descriptions %}
+                        {% if course.id == description.course.id %}
+                            <td>{{description.description}}</td> 
+                        {% endif %}
+                    {% endfor %} 
+                <td>{{course.created_at}}</td>
+                <td> 
+                    <form action="{%url 'courses:confirm' id=course.id %}" method="POST">
+                    {% csrf_token %}
+                        <button name="delete" value="Delete">remove</button>
+                    </form>
+                </td>
+                {% endfor %}
+            {% endif %}
+            </tr>
+        </table>
+    </main>
+</body>
+</html>
