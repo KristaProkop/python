@@ -6,6 +6,6 @@ urlpatterns = [
     url(r'^add$', views.create,name="create"),
     url(r'^confirm/(?P<id>\d+)$', views.confirm,name="confirm"),
     url(r'^delete/(?P<id>\d+)$', views.delete, name="delete"),
-    url(r'^add_user$', views.add_user, name='add_user'),
-    url(r'^merge_user$', views.merge_user, name="merge_user")
+    # url(r'^add_user$', views.add_user, name='add_user'),
+    url(r'^users_courses$', views.users_courses, name="users_courses")
 ]

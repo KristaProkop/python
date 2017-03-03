@@ -13,7 +13,7 @@
         <h3 >{{message}}</h3>
     {% endfor %}
 {% endif %}
-    <form action="{% url 'courses:merge_user' %}" method="post">
+    <form action="{% url 'courses:users_courses' %}" method="post">
         {% csrf_token %}
         <select name="user">
             {% if users %}
@@ -33,8 +33,8 @@
     </form>
     <table>
         <tr>
-            <th>Course</th>
-            <th>Title</th>
+            <th>Course ID</th>
+            <th>Name</th>
             <th>Number of Users</th>
         </tr>
         {% if courses %}

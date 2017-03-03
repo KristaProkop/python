@@ -3,11 +3,12 @@ from .models import Course, Description
 from django.core.urlresolvers import reverse
 from ..login.models import User
 from django.contrib import messages
+from django.db.models import Count
 
 def index(request):
     context = {
         'courses': Course.objects.all(),
-        'descriptions': Description.objects.all()
+        'descriptions': Description.objects.all(),
     }
     return render(request, 'courses/index.html', context)
 
@@ -30,27 +31,26 @@ def delete(request, id):
     Description.objects.get(course=course).delete()
     course.delete()
     return redirect(reverse('courses:index'))
-
-def add_user(request):
-    context = {
-        'courses': Course.objects.all(),
-        'users': User.objects.all().order_by('first_name', 'last_name')
-    }
-    return render(request, 'courses/course_selector.html', context)
-
-def merge_user(request):
+    
+def users_courses(request):
     if request.method == 'POST':
         course_id = int(request.POST['course'])
         user_id = int(request.POST['user'])
         user = User.objects.get(id=user_id)
         course = Course.objects.get(id=course_id)
         course.user_creator.add(user)
+         
         message = "Successfully added ", user.first_name, " to ", course.name
         print message
         messages.success(request, message)
-        return redirect(reverse('courses:add_user'))
+        return redirect(reverse('courses:users_courses'))
     else:
-        return redirect(reverse('courses:add_user'))
+        context = {
+            'courses': Course.objects.annotate(num_users=Count('user_creator')).order_by('name'),
+            # 'courses': Course.objects.all(),
+            'users': User.objects.all().order_by('first_name', 'last_name'),
+        }
+        return render(request, 'courses/course_selector.html', context)
 
     
 

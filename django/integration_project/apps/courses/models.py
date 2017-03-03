@@ -2,14 +2,13 @@ from __future__ import unicode_literals
 from django.db import models
 from ..login.models import User
 
-# Create your models here.
+# need to refactor to move logic to model
 class CourseManager(models.Model):
     def merge(self, user_id, course_id):
         user = User.objects.get(id=user_id)
         print user
         course = Course.objects.get(id=course_id)
-        response = Course.user_creator.add(user)
-        print response
+        course.user_creator.add(user)
         return True
 
 
