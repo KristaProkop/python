@@ -19,14 +19,14 @@ def create(request):
             'event': 'registered',
             'first_name': response
         }
-        return render(request, 'login/success.html', context)
+        return redirect(reverse('courses:index'))
     elif not valid: 
         messages.error(request, response)
     else:
         messages.error(request, "Something went wrong. Try again later.")
     return redirect(reverse('login:index'))
     
-##TODO: change routing so successful login/register redirects to /success 
+
 def login(request):
     email = str(request.POST['email'])
     password = str(request.POST['password'])
@@ -36,7 +36,7 @@ def login(request):
             'event': "logged in",
             'first_name': response,
         }
-        return render(request, 'login/success.html', context)
+        return redirect(reverse('courses:index'))
     if not valid:
         messages.error(request, response)
         return redirect(reverse('login:index'))
