@@ -26,7 +26,7 @@ def new(request):
     return render(request, 'restful/new_product.html')
 
 def create(request):
-    if request.method =="POST":
+    if request.method=="POST":
         name = request.POST['name']
         description = request.POST['description']
         price = float(request.POST['price'])
