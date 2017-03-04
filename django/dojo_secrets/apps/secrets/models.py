@@ -9,18 +9,14 @@ class SecretManager(models.Model):
         secret = Secret.objects.create(posted_by=user, message=message)
         return True
 
-    def delete_secret(self, secret_id):        # # user = User.objects.get(id=request.session['id'])
-        # print user
-        #add logic to test if session[id] is equal to secret posted_by id
+    def delete_secret(self, secret_id):       
         Secret.objects.filter(id=secret_id).delete()
         return True
 
 class LikeManager(models.Model):
     def create_like(self, user_id, message_id):
         user = User.objects.get(id=user_id)
-        print "user object:", user
         secret = Secret.objects.get(id=message_id)
-        print "secret object:", secret
         Like.objects.create(secret=secret, liker=user)
         return True
 

@@ -14,6 +14,13 @@ def index(request):
         }
         return render(request, 'secrets/index.html', context)
 
+def most_popular(request):
+    context = {
+        'secrets': Secret.objects.all().order_by('created_at'),
+        'likes': Like.objects.all(),
+    }
+    return render(request, 'secrets/popular_secrets.html', context)
+
 def create_secret(request, id):
     Secret.SecretManager.create_secret(message=request.POST['message'], user_id=id)
     return redirect(reverse('secrets:index'))
