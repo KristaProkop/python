@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books</title>
+</head>
+<body>
+    <header>
+        <h2>Welcome, {{request.session.name}}!</h2>
+        <a href="{% url 'login:logout' %}">Logout</a>
+        <a href="{% url 'book_reviews:add_book' %}">Add Book and Author</a>
+    </header>
+    <main>
+        <h1>Recent Book Reviews:</h1>
+        {% for book in recent_books %}
+            <h2>{{book.id}} {{book.title}}, {{book.author}}</h2>
+        {% endfor %}
+    </main>
+    <section>
+    <!-- this isnt' doing anythign: -->
+        <h3>Other Books with Reviews:</h3>
+        {% for book in other_books %}
+            <h2>{{book.title}}, {{book.author}}</h2>
+        {% endfor %}
+    </section>
+
+        <section>
+        <h3>Reviews:</h3>
+        
+        {% for review in reviews %}
+            <span><a href="{% url 'book_reviews:show_book' id=review.book.id %}">           
+            <h2>{{review.book}}</h2></a> 
+            <p>Review by {{review.user.first_name}}</p>
+            </span>
+        {% endfor %}
+    </section>
+</body>
+</html>
