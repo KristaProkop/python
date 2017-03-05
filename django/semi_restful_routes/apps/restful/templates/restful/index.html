@@ -29,8 +29,9 @@
             <td>{{product.description}}</td>
             <td>${{product.price}}</td>
             <td class='last_column'> 
+            <!-- change show form to button for get request -->
                 <form action="{%url 'restful:show' id=product.id %}" method="GET">
-                
+        
                     <button name="show" value="show">Show</button>
                 </form>
                 <form action="{%url 'restful:destroy' id=product.id %}" method="POST">

@@ -11,17 +11,13 @@ def index(request):
         return redirect(reverse('secrets:index'))
 
 def create(request):
-    first_name=str(request.POST['first_name'])
-    last_name=str(request.POST['last_name'])
-    email=str(request.POST['email'])
-    password1=str(request.POST['password1'])
-    password2=str(request.POST['password2'])
-    valid, response = User.objects.validate(first_name, last_name, email, password1, password2)
+    valid, response = User.objects.validate(request.POST)
     if valid:
         context = {
             'event': 'registered',
-            'first_name': response
+            'first_name': request.POST['first_name']
         }
+        messages.success(request, response)
         return redirect(reverse('login:index'))
     elif not valid: 
         messages.error(request, response)
@@ -31,15 +27,17 @@ def create(request):
     
 
 def login(request):
-    email = str(request.POST['email'])
-    password = str(request.POST['password'])
-    valid, response = User.objects.login(email, password)
+    valid, response = User.objects.login(request.POST)
     if valid:
         request.session['id'] = response.id
         request.session['name'] = response.first_name
-        print "session id is ", request.session['id']
         return redirect(reverse('secrets:index'))
     if not valid:
         messages.error(request, response)
         return redirect(reverse('login:index'))
+
+        
+def logout(request):
+    request.session.clear()
+    return redirect(reverse('login:index'))
 

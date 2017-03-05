@@ -15,8 +15,10 @@ class SecretManager(models.Manager):
 
     def create_like(self, user_id, secret_id):
         user = User.objects.filter(id=user_id)
-        print user
-        Secret.objects.filter(id=secret_id).update(all_likes=user)
+        secret = Secret.objects.get(id=secret_id)
+        user = user[0]
+        secret.all_likes.add(user)
+        secret.save()
         return True
 
 
@@ -29,7 +31,7 @@ class Secret(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     objects = SecretManager()
 
-    def __str__(self):
-        return self.secret
+    # def __str__(self):
+    #     return self.secret
 
 

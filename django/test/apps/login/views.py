@@ -5,7 +5,14 @@ from django.core.urlresolvers import reverse
 
 
 def index(request):
-    return render(request, 'login/index.html')
+    if "id" not in request.session:
+        return render(request, 'login/index.html')
+    else: 
+        return redirect(reverse('books:index'))
+
+def logout(request):
+    request.session.clear()
+    return redirect(reverse('login:index'))
 
 def create(request):
     first_name=str(request.POST['first_name'])
@@ -19,25 +26,24 @@ def create(request):
             'event': 'registered',
             'first_name': response
         }
-        return render(request, 'login/success.html', context)
+        messages.success(request, "Successfully registered. Please login.")
+        return redirect(reverse('login:index'))
     elif not valid: 
         messages.error(request, response)
     else:
         messages.error(request, "Something went wrong. Try again later.")
-    return redirect(reverse('home'))
+    return redirect(reverse('books:index'))
     
-##TODO: change routing so successful login/register redirects to /success 
+
 def login(request):
     email = str(request.POST['email'])
     password = str(request.POST['password'])
     valid, response = User.userManager.login(email, password)
     if valid:
-        context = {
-            'event': "logged in",
-            'first_name': response,
-        }
-        return render(request, 'login/success.html', context)
+        request.session['id'] = response.id
+        request.session['name'] = response.first_name
+        return redirect(reverse('books:index'))
     if not valid:
         messages.error(request, response)
-        return redirect(reverse('home'))
+        return redirect(reverse('login:index'))
 

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books Home</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{request.session.name}}</h1>
+        <a href="{%url 'login:logout' %}">Logout</a>
+    </header>
+    <main>
+
+        <h2>Recent Book Reviews:</h2>
+
+    </main>
+</body>
+</html>

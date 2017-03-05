@@ -10,7 +10,7 @@
 <body>
     <div>
         <h1>Register</h1>
-        <form action="/create" method="post"> 
+        <form action="{%url 'create' %}" method="post"> 
         {% csrf_token %}
             <label>First Name: <input type="name" name="first_name"></label>
             <label>Last Name: <input type="name" name="last_name"></label>
