@@ -4,17 +4,12 @@
     <meta charset="utf-8">
     <title>Registration Form</title>
     {% load staticfiles %}
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href= "{% static 'login/css/materialize.min.css' %}"   media="screen,projection"/>
-
-      <!--Let browser know website is optimized for mobile-->
+    <link rel="stylesheet" href="{% static 'login/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 </head>
 <body>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
     <div>
         <h1>Register</h1>
         <form action="{%url 'login:create' %}" method="post"> 
