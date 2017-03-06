@@ -20,7 +20,7 @@
 
     <section>
         <h2>Add a Review</h2>
-        <form action="{% url 'book_reviews:add_review' id=book.id %}" method="POST">
+        <form action="{% url 'book_reviews:create_review' id=book.id %}" method="POST">
         {% csrf_token %}
            <label>Review: <textarea rows="5" cols="50" name="review"></textarea> </label> 
            <label>Rating:<select name="rating">

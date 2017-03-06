@@ -1,21 +1,27 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.db.models import Avg
 from .models import Author, Book, Review
 from ..login.models import User, UserManager
 
-
-
 def index(request):
-    context = {
-        'recent_books': Book.objects.all().order_by('-created_at')[:3],
-        'other_books': Book.objects.all().order_by('-created_at')[4:],
-        'authors': Author.objects.all(),
-        'reviews': Review.objects.all(),
-    }
-    return render(request, 'book_reviews/index.html', context)
+    if 'id' not in request.session:
+        return redirect(reverse('login:index'))
+    else: 
+        context = {
+            'recent_books': Book.objects.all().order_by('-created_at')[:3],
+            'other_books': Book.objects.all().order_by('-created_at')[::-1],
+            'authors': Author.objects.all(),
+            'reviews': Review.objects.all(),
+        }
+        for book in context['recent_books']:
+            reviews = Review.objects.filter(book=book)
+            book.avg_rating = (reviews.aggregate(Avg('rating')))['rating__avg']
+            book.avg_rating = round(book.avg_rating, 2)
+        return render(request, 'book_reviews/index.html', context)
 
-def add_book(request):
+def create(request):
     if request.method == "GET":
         context = {
             'authors': Author.objects.all()
@@ -40,7 +46,7 @@ def show_book(request, id):
         }
         return render(request, 'book_reviews/show_book.html', context)
 
-def add_review(request, id):
+def create_review(request, id):
     if request.method == "POST":
         book = Book.objects.get(id=id)
         review = Review.objects.create_review(request.POST, book.id, request.session['id'])
@@ -53,6 +59,8 @@ def show_user(request, id):
         'user': user,
         'reviews': Review.objects.filter(user=user)
     }
-    return render(request, 'login/show_user.html', context)
+    return render(request, 'book_reviews/show_user.html', context)
+
+
 
         

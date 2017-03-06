@@ -2,36 +2,41 @@
 <html>
 <head>
     <title>Books</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'books/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 </head>
 <body>
     <header>
         <h2>Welcome, {{request.session.name}}!</h2>
         <a href="{% url 'login:logout' %}">Logout</a>
-        <a href="{% url 'book_reviews:add_book' %}">Add Book and Author</a>
+        <a href="{% url 'book_reviews:create' %}">Add Book and Author</a>
     </header>
     <main>
         <h1>Recent Book Reviews:</h1>
+
         {% for book in recent_books %}
-            <h2>{{book.id}} {{book.title}}, {{book.author}}</h2>
+            <h4>{{book.title}}, {{book.author}} </h4>
+            <p>Average rating: {{book.avg_rating}}</p>
         {% endfor %}
     </main>
     <section>
     <!-- this isnt' doing anythign: -->
-        <h3>Other Books with Reviews:</h3>
-        {% for book in other_books %}
-            <h2>{{book.title}}, {{book.author}}</h2>
-        {% endfor %}
+
     </section>
 
         <section>
-        <h3>Reviews:</h3>
-        
+        <h3>Other Reviews:</h3>
+        <div>
         {% for review in reviews %}
             <span><a href="{% url 'book_reviews:show_book' id=review.book.id %}">           
-            <h2>{{review.book}}</h2></a> 
-            <p>Review by {{review.user.first_name}}</p>
+            <h3>{{review.book}}</h3></a> 
+            <p>Review by <a href="{% url 'book_reviews:show_user' id=review.user.id %}">{{review.user.first_name}}</a></p>
             </span>
+
         {% endfor %}
+                </div>
     </section>
 </body>
 </html>

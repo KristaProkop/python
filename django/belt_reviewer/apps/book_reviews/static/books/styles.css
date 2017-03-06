@@ -1,0 +1,61 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    background-color: steelblue;
+    color: white;
+    font-family: Helvetica;
+}
+
+h2  {
+    display: inline-block;
+    height: 50px;
+    margin-top: 10px;
+
+}
+
+header>a {
+    margin-top: 10px;
+    float: right;
+    margin-right: 20px;
+    color: white;
+}
+
+main {
+    display: block;
+    max-width: 80%;
+    border: 1px solid black;
+    font-family: Helvetica;
+}
+
+div {
+    height: 200px;
+    width: 80%;
+    border: 1px solid black;
+    overflow: scroll;
+}
+
+h3 {
+    display: inline-block;
+}
+
+p {
+    display: inline-block;
+}
+
+span {
+    display: block;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+button {
+    background-color: steelblue;
+    color: white;
+    margin-top: 10px;
+}
