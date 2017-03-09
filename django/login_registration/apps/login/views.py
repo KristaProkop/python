@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from .models import User, UserManager
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-
+from .forms import RegisterForm
 
 def index(request):
-    return render(request, 'login/index.html')
+    form = RegisterForm()
+    context = { "regForm": form }
+    return render(request, 'login/index.html', context)
 
 def create(request):
     first_name=str(request.POST['first_name'])
