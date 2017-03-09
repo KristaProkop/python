@@ -2,11 +2,17 @@ from django.shortcuts import render, redirect
 from .models import User, UserManager
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-
+from .forms import RegisterForm, LoginForm
 
 def index(request):
     if "id" not in request.session:
-        return render(request, 'login/index.html')
+        regForm = RegisterForm()
+        logForm = LoginForm
+        context = { 
+            "regForm": regForm,
+            "logForm": logForm
+        }
+        return render(request, 'login/index.html', context)
     else: 
         return redirect(reverse('book_reviews:index'))
 

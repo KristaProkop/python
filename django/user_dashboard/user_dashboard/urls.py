@@ -1,4 +1,5 @@
 from django.conf.urls import url, include
+from django.contrib import admin
 from apps.loginReg.models import User
 from apps.dashboard.models import Message, Comment
 

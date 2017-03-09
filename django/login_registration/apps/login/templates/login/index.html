@@ -8,6 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
+  <body>
+    <form class="" action="/register" method="post">
+      {% csrf_token %}
+      {{regForm.as_p}}
+      <!--  ".as_p" is an example of an option you can attach to the form inputs
+      "as_table" and "as_ul" are a few others...-->
+      <input type="submit" value="register">
+    </form>
+  </body>
+  
     <div>
         <h1>Register</h1>
         <form action="{%url 'create' %}" method="post"> 
