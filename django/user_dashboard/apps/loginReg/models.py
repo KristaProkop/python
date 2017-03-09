@@ -42,25 +42,46 @@ class UserManager(models.Manager):
             response = "Email not found."
             return False, response
 
-    def update_description(self, id, description):
-        user = User.objects.filter(id=id).update(description=description)
-        return True
+    def update_user(self, id, category, postData):
+        # category 1 = description; category 2 = information, category 3 = password
+        if category == '1':
+            user = User.objects.filter(id=id).update(description=postData['description'])
+            response = "Description successfully updated"
+        if category == '2':
+            user = User.objects.filter(id=id).update(email=postData['email'], first_name=postData['first_name'], last_name=postData['last_name'])
+            response = "Information successfully updated"
+        if category == '3':
+            if postData['password'] != postData['confirm_password']:
+                response = ("Passwords must match")
+            elif len(postData['password']) < 8:
+                response = ("Password must be 8 or more characters")
+            else:
+                hashed = bcrypt.hashpw(postData['password'].encode('utf-8'), bcrypt.gensalt())
+                user = User.objects.filter(id=id).update(password=hashed)
+                response = ("Successfully updated.")
+                return True, response
+            return False, response
+        return True, response
 
-    def update_information(self, id, postData):
-        user = User.objects.filter(id=id).update(email=postData['email'], first_name=postData['first_name'], last_name=postData['last_name'])
-        return True
+    # def update_description(self, id, description):
+    #     user = User.objects.filter(id=id).update(description=description)
+    #     return True
 
-    def update_password(self, id, postData):
-        if postData['password'] != postData['confirm_password']:
-            response = ("Passwords must match")
-        elif len(postData['password']) < 8:
-            response = ("Password must be 8 or more characters")
-        else:
-            hashed = bcrypt.hashpw(postData['password'].encode('utf-8'), bcrypt.gensalt())
-            user = User.objects.filter(id=id).update(password=hashed)
-            response = ("Successfully updated.")
-            return True, response
-        return False, response
+    # def update_information(self, id, postData):
+    #     user = User.objects.filter(id=id).update(email=postData['email'], first_name=postData['first_name'], last_name=postData['last_name'])
+    #     return True
+
+    # def update_password(self, id, postData):
+    #     if postData['password'] != postData['confirm_password']:
+    #         response = ("Passwords must match")
+    #     elif len(postData['password']) < 8:
+    #         response = ("Password must be 8 or more characters")
+    #     else:
+    #         hashed = bcrypt.hashpw(postData['password'].encode('utf-8'), bcrypt.gensalt())
+    #         user = User.objects.filter(id=id).update(password=hashed)
+    #         response = ("Successfully updated.")
+    #         return True, response
+    #     return False, response
 
 class User(models.Model):
     NORMAL = "Normal"
