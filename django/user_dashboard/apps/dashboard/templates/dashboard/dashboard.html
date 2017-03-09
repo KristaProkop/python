@@ -15,8 +15,8 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="#">Dashboard</a></li>
-          <li><a href="#">Profile</a></li>
+          <li> <a href="#">Dashboard</a></li>
+          <li><a href="{% url 'users:show_user' id=request.session.id %}">Profile</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{% url 'loginReg:logoff' %}">Log off</a></li>
@@ -29,6 +29,9 @@
     <table class = "table table-striped">
      <caption>All Users</caption>
      <a href="{% url 'users:add_user' %}"><button class='.btn btn-primary pull-right'>Add New</button></a>
+{% if messages %}
+{{message}}
+{% endif %}
      <thead>
         <tr>
            <th>ID</th>
@@ -36,23 +39,30 @@
            <th>Email</th>
            <th>Created At</th>
            <th>User Level</th>
+           <th>Activities</th>
         </tr>
      </thead>
      <tbody>
-      <tr>
-           <td>{{users.id}}</td>
-           <td><a href="{% url 'users:edit_user' %}">{{users.name}}</td></a>
-           <td>{{users.email}}</td>
-           <td>{{users.creted_at}}</td>
-           <td>{{users.level}}</td>
-        </tr>
       {% for user in users %}
         <tr>
            <td>{{user.id}}</td>
-           <td>{{user.name}}</td>
+           <td><a href="{% url 'users:show_user' id=user.id %}">{{user.first_name}} {{user.last_name}}</a></td>
            <td>{{user.email}}</td>
            <td>{{user.created_at}}</td>
            <td>{{user.level}}</td>
+           {% if user_level == 'ADMIN' %}
+             <td>
+               <a href="{% url 'users:edit_user' id=user.id %}"><button>Edit</button></a>
+               {% if user.id != request.session.id %}
+                <a href="{% url 'loginReg:delete_user' id=user.id %}"><button>Delete</button></a>
+               {% endif %}
+            {% endif %}
+            {% if user_level == 'NORMAL' %}
+               {% if user.id == request.session.id %}
+                <a href="{% url 'users:edit_user' id=user.id %}"><button>Edit</button></a>
+               {% endif %}
+            {% endif %}
+            </td>
         </tr>
       {% endfor %}
      </tbody>
