@@ -15,11 +15,8 @@ class MessageManager(models.Manager):
 class CommentManager(models.Manager):
     def create_comment(request, user_id, message_id, postData):
         user = User.objects.get(id=user_id)
-        print user
         message = Message.objects.get(id=message_id)
-        print message
         comment = Comment.objects.create(comment=postData['comment'], message=message, user=user)
-        print comment
         return True
 
 

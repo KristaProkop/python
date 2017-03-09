@@ -24,7 +24,7 @@
       </div>
     </div>
   </nav>
-  <div class="container">
+  <div class="container jumbotron">
     <div class="row">
         <div class="col-sm-6">
           <h2>{{user.first_name}} {{user.last_name}}</h2>
@@ -64,13 +64,13 @@
               {% if comment.message.id == message.id %}
               <div class="col-sm-12 pull-right">
               <h4>{{comment.user.first_name}}{{comment.user.last_name}} Wrote:</h4>
-               <textarea class="form-control">{{comment.comment}} {{comment.id}}</textarea>
+               <textarea class="form-control">{{comment.comment}}</textarea>
                {% endif %}
                {% endfor %}
                </div>
                </div>
                </div>
-              <form action="{% url 'users:create_comment' user_id=request.session.id message_id=message.id  %}" method="POST">
+              <form action="{% url 'users:create_comment' user_id=request.session.id message_id=message.id origin_id=user.id %}" method="POST">
                 {% csrf_token %}
                   <div class="form-group col-sm-9 pull-right">
                     <textarea rows="5" class="form-control" name="comment" placeholder="Reply..."></textarea>

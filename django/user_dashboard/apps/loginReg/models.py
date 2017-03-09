@@ -21,7 +21,7 @@ class UserManager(models.Manager):
                 response = ("Password must be 8 or more characters")
             else:
                 hashed = bcrypt.hashpw(postData['password'].encode('utf-8'), bcrypt.gensalt())
-                user = User.objects.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashed, level='ADMIN')
+                user = User.objects.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashed, level='NORMAL')
                 response = ("Successfully registered.")
                 return True, response
         return False, response
@@ -52,7 +52,7 @@ class UserManager(models.Manager):
 
     def update_password(self, id, postData):
         if postData['password'] != postData['confirm_password']:
-                response = ("Passwords must match")
+            response = ("Passwords must match")
         elif len(postData['password']) < 8:
             response = ("Password must be 8 or more characters")
         else:
@@ -60,6 +60,7 @@ class UserManager(models.Manager):
             user = User.objects.filter(id=id).update(password=hashed)
             response = ("Successfully updated.")
             return True, response
+        return False, response
 
 class User(models.Model):
     NORMAL = "Normal"

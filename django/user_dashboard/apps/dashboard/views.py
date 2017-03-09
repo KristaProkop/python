@@ -6,15 +6,24 @@ from ..loginReg.models import User
 
 def index(request):
     if 'id' not in request.session:
-        return redirect(reverse('loginReg:index'))
+        return redirect(reverse('loginReg:display_login'))
     else:
         current_user = User.objects.get(id=request.session['id'])
-        print current_user.level
-        context = {
-            'users': User.objects.all(),
-            'user_level': current_user.level
-        }
-        return render(request, 'dashboard/dashboard.html', context)
+        if current_user.level == "ADMIN":
+            return redirect(reverse('dashboard:admin'))   
+        else:
+            context = {
+                'users': User.objects.all(),
+                'level': current_user.level
+            }   
+            return render(request, 'dashboard/dashboard.html', context)
+
+def admin(request):
+    context = {
+                'users': User.objects.all(),
+                'level': "ADMIN"
+            }  
+    return render(request, 'dashboard/dashboard.html', context)
 
 def add_user(request):
     return render(request, 'dashboard/add_user.html')
@@ -39,12 +48,12 @@ def show_user(request, id):
 
 def create_message(request, user_id, creator_id):
     message = Message.objects.create_message(user_id, creator_id, request.POST)
-    return redirect(reverse('dashboard:index'))
+    return redirect(reverse('users:show_user', kwargs={'id': user_id})) 
 
 
-def create_comment(request, user_id, message_id):
+def create_comment(request, user_id, message_id, origin_id):
     comment = Comment.objects.create_comment(user_id, message_id, request.POST)
-    return redirect(reverse('dashboard:index'))
+    return redirect(reverse('users:show_user',kwargs={'id': origin_id})) 
 
 
 

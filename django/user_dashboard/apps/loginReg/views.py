@@ -36,15 +36,23 @@ def login(request):
 def update_description(request, id):
     description = request.POST['description']
     user = User.objects.update_description(id, description)
+    messages.success(request, "Description successfully updated")
     return redirect(reverse('dashboard:index')) 
 
 def update_information(request, id):
     user = User.objects.update_information(id, request.POST)
+    messages.success(request, "Information successfully updated")
     return redirect(reverse('dashboard:index'))
 
 def update_password(request, id):
-    user = User.objects.update_password(id, request.POST)
-    return redirect(reverse('dashboard:index')) 
+    valid, response = User.objects.update_password(id, request.POST)
+    if valid:
+        messages.success(request, response)
+        return redirect(reverse('dashboard:index')) 
+    if not valid:
+        messages.error(request, response)
+        return redirect(reverse('users:edit_user', kwargs={'id': id})) 
+
     
 def new_user(request):
     valid, response = User.objects.validate(request.POST)

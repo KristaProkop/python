@@ -25,13 +25,19 @@
     </div>
   </nav>
 
+
+
   <div class="container">
+    {% if messages %}
+      {% for message in messages %}
+        <p class="alert alert-info"">{{message}}</p>
+      {% endfor %}
+    {% endif %}
     <table class = "table table-striped">
      <caption>All Users</caption>
-     <a href="{% url 'users:add_user' %}"><button class='.btn btn-primary pull-right'>Add New</button></a>
-{% if messages %}
-{{message}}
-{% endif %}
+     {% if level == "ADMIN" %}
+       <a href="{% url 'users:add_user' %}"><button class='.btn btn-primary pull-right'>Add New</button></a>
+     {% endif %}
      <thead>
         <tr>
            <th>ID</th>
@@ -39,7 +45,7 @@
            <th>Email</th>
            <th>Created At</th>
            <th>User Level</th>
-           <th>Activities</th>
+           <th>Profile</th>
         </tr>
      </thead>
      <tbody>
@@ -50,16 +56,18 @@
            <td>{{user.email}}</td>
            <td>{{user.created_at}}</td>
            <td>{{user.level}}</td>
-           {% if user_level == 'ADMIN' %}
+
+           {% if level == 'ADMIN' %}
              <td>
-               <a href="{% url 'users:edit_user' id=user.id %}"><button>Edit</button></a>
+               <a href="{% url 'users:edit_user' id=user.id %}"><butto class="btn-link"n>Edit</button></a>
                {% if user.id != request.session.id %}
-                <a href="{% url 'loginReg:delete_user' id=user.id %}"><button>Delete</button></a>
+                <a href="{% url 'loginReg:delete_user' id=user.id %}"><button class="btn-link">Remove</button></a>
                {% endif %}
             {% endif %}
-            {% if user_level == 'NORMAL' %}
+            {% if level == 'NORMAL' %}
+              <td>
                {% if user.id == request.session.id %}
-                <a href="{% url 'users:edit_user' id=user.id %}"><button>Edit</button></a>
+                <a href="{% url 'users:edit_user' id=user.id %}"><button class="btn-link">Edit</button></a></td>
                {% endif %}
             {% endif %}
             </td>
