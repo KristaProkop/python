@@ -24,7 +24,7 @@ class UserManager(models.Manager):
                 return True, response
         return False, response
 
-    def validate_password(self, id, postData):
+    def validate_password(self, postData):
         if postData['password'] != postData['confirm_password']:
             response = ("Passwords must match")
         elif len(postData['password']) < 8:
@@ -37,7 +37,7 @@ class UserManager(models.Manager):
     def register(self, postData):
         try: 
             hashed = bcrypt.hashpw(postData['password'].encode('utf-8'), bcrypt.gensalt())
-            user = User.objects.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashed, level='NORMAL')
+            user = User.objects.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashed)
             response = "Successfully registered"
             return True, response
         except:
@@ -52,8 +52,6 @@ class UserManager(models.Manager):
             userPwBytes = password.encode('utf-8')
             hashedPwBytes = user.password.encode('utf-8')
             if hashedPwBytes == (bcrypt.hashpw(userPwBytes, hashedPwBytes)):
-                request.session['id'] = user.id
-                request.session['first_name'] = user.first_name
                 return True, user
             else:
                 response = "Email and password don't match."
