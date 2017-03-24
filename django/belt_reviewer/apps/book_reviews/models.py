@@ -7,7 +7,6 @@ class BookManager(models.Manager):
     def create_book(request, postData, author):
         try: 
             book = Book.objects.get(title=postData['title'])
-            return book
         except:
             book = Book.objects.create(title=postData['title'], author=author)
         return book
@@ -15,10 +14,8 @@ class BookManager(models.Manager):
 class AuthorManager(models.Manager):
     def create_author(request, postData):
         if postData['new_author']:
-            print "new author"
             author = Author.objects.create(name=postData['new_author'])
         elif postData['existing_author']: 
-            print "existing author"
             author = Author.objects.get(name=postData['existing_author'])
         return author
 

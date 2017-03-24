@@ -2,41 +2,86 @@
 <html>
 <head>
     <title>Books</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'books/styles.css' %}"media="screen" title="no title"  charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'books/styles.css' %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-</head>
 <body>
-    <header>
-        <h2>Welcome, {{request.session.name}}!</h2>
-        <a href="{% url 'login:logout' %}">Logout</a>
-        <a href="{% url 'book_reviews:create' %}">Add Book and Author</a>
-    </header>
-    <main>
-        <h1>Recent Book Reviews:</h1>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+                $(".button-collapse").sideNav();
+                });
+    </script>
 
-        {% for book in recent_books %}
-            <h4>{{book.title}}, {{book.author}} </h4>
-            <p>Average rating: {{book.avg_rating}}</p>
-        {% endfor %}
-    </main>
-    <section>
-    <!-- this isnt' doing anythign: -->
 
-    </section>
+<!-- can't click sidenav links? -->
+    <div class="navbar-fixed" >
+        <nav class="nav">
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo">Welcome, {{request.session.name}}!</a>
+              <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="{% url 'book_reviews:create' %}">Add Book and Author</a></li>
+                <li><a href="{% url 'login:logout' %}">Logout</a></li>
+              </ul>
+              <ul class="side-nav" id="mobile-demo">
+                <li><a href="{% url 'login:logout' %}">Logout</a></li>
+                <li><a href="{% url 'book_reviews:create' %}">Add Book and Author</a></li>
+                </li>
+              </ul>
+            </div>
+          </nav>
+    </div>
 
-        <section>
-        <h3>Other Reviews:</h3>
-        <div>
+    <div class="row">
+      <div class="container">
+      <div class="container col s12"></div>
+        <h4 class="red-text text-lighten-3">Recent Reviews:</h4>
+
         {% for review in reviews %}
-            <span><a href="{% url 'book_reviews:show_book' id=review.book.id %}">           
-            <h3>{{review.book}}</h3></a> 
-            <p>Review by <a href="{% url 'book_reviews:show_user' id=review.user.id %}">{{review.user.first_name}}</a></p>
-            </span>
-
+        <div class="col m4">
+          <div class="card small red lighten-3">
+            <div class="card-content black-text">
+              <span class="card-title">{{review.book}}</span>
+              <p class="black-text">{{review.book.author}}</p>
+              <div class="section"></div>
+              {% if review.rating == 1 %}
+              <img class="responsive-img" style="width: 70%" src="{% static 'books/one-star.png' %}" />
+              {% endif %}
+              {% if review.rating == 2 %}
+              <img class="responsive-img" style="width: 70%" src="{% static 'books/two-stars.png' %}" />
+              {% endif %}
+              {% if review.rating == 3 %}
+              <img class="responsive-img" style="width: 70%" src="{% static 'books/three-stars.png' %}" />
+              {% endif %}
+              {% if review.rating == 4 %}
+              <img class="responsive-img" style="width: 70%" src="{% static 'books/four_stars.png' %}" />
+              {% endif %}
+              {% if review.rating == 5 %}
+              <img class="responsive-img" style="width: 70%" src="{% static 'books/five_stars.png' %}" />
+              {% endif %}
+            </div>
+            <div class="card-action">
+              <a class="card-review" href="{% url 'book_reviews:show_book' id=review.book.id %}">Read Reviews</a>
+              <a class="card-review" href="{% url 'book_reviews:show_user' id=review.user.id %}">{{review.user.first_name}}</a>
+            </div>
+          </div>
+        </div>
         {% endfor %}
-                </div>
-    </section>
+      </div>
+    </div>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+<!-- Compiled and minified JavaScript --> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script> 
+<script>
+ $(".button-collapse").sideNav();
+ </script>
 </body>
 </html>

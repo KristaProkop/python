@@ -10,7 +10,7 @@ def index(request):
         return redirect(reverse('login:index'))
     else: 
         context = {
-            'recent_books': Book.objects.all().order_by('-created_at')[:3],
+            'recent_books': Book.objects.all().order_by('-created_at')[:5],
             'other_books': Book.objects.all().order_by('-created_at')[::-1],
             'authors': Author.objects.all(),
             'reviews': Review.objects.all(),
@@ -24,7 +24,8 @@ def index(request):
 def create(request):
     if request.method == "GET":
         context = {
-            'authors': Author.objects.all()
+            'books': Book.objects.all().order_by('title'),
+            'authors': Author.objects.all().order_by('name')
         }
         return render(request, 'book_reviews/add_book.html', context)
     else:
@@ -57,7 +58,7 @@ def show_user(request, id):
     user = User.objects.get(id=id)
     context = {
         'user': user,
-        'reviews': Review.objects.filter(user=user)
+        'reviews': Review.objects.filter(user=user).order_by('-created_at')
     }
     return render(request, 'book_reviews/show_user.html', context)
 

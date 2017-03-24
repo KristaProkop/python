@@ -3,59 +3,22 @@
     margin: 0;
 }
 
-header {
-    background-color: steelblue;
-    color: white;
-    font-family: Helvetica;
+.nav_wrapper>a {
+    margin-top: 20px !important;
 }
 
-h2  {
-    display: inline-block;
-    height: 50px;
-    margin-top: 10px;
 
+#form_box {
+    display: inline-block; 
+    padding: 10px 40px 0px 40px; */
+    border: 1px solid #EEE;
 }
 
-header>a {
-    margin-top: 10px;
-    float: right;
-    margin-right: 20px;
-    color: white;
+.card {
+    margin-top: 20px !important;
 }
 
-main {
-    display: block;
-    max-width: 80%;
-    border: 1px solid black;
-    font-family: Helvetica;
+.card-review {
+    color: white !important;
 }
 
-div {
-    height: 200px;
-    width: 80%;
-    border: 1px solid black;
-    overflow: scroll;
-}
-
-h3 {
-    display: inline-block;
-}
-
-p {
-    display: inline-block;
-}
-
-span {
-    display: block;
-}
-
-label {
-    display: block;
-    margin-top: 10px;
-}
-
-button {
-    background-color: steelblue;
-    color: white;
-    margin-top: 10px;
-}
